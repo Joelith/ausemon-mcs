@@ -17,6 +17,19 @@ module.exports = function(service) {
 	 */
 
 
+service.get('/mobile/custom/Animals/animals/nearby', function(req,res) {
+		lat = req.query.lat;
+		lon = req.query.lon;
+		req.oracleMobile.connectors.AnimalsACCS.get('/nearby?lat=' + lat + '&lon=' + lon).then(
+			function (result) {
+				res.send(result.statusCode, result.result);
+			},
+			function (error) {
+				res.send(500, error.error);
+			}
+		);		
+	});
+
 	service.get('/mobile/custom/Animals/animals/:id', function(req,res) {
 		id = req.params.id;
 		req.oracleMobile.connectors.AnimalsACCS.get('/' + id).then(
@@ -27,24 +40,6 @@ module.exports = function(service) {
 				res.send(500, error.error);
 			}
 		);
-	});
-
-	service.get('/mobile/custom/Animals/animals/nearby', function(req,res) {
-		var result = {};
-		var statusCode = 200;
-		if (statusCode == 200){
-			var acceptType = req.accepts(['application/json']);
-			if (acceptType == 'application/json'){
-				result = {
-					  "animals":[{
-					    "id":1,
-					    "name":"Kangaroo",
-					    "distance": 2.3
-					  }]
-					};
-			}
-		}
-		res.send(statusCode, result);
 	});
 
 	service.get('/mobile/custom/Animals/animals', function(req,res) {
