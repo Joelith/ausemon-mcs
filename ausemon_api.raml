@@ -1,0 +1,127 @@
+#%RAML 0.8
+title: Animals
+version: 1.0
+baseUri: /mobile/custom/Animals
+protocols: [HTTPS]
+schemas:
+  - animal: |
+      {
+        "$schema": "http://json-schema.org/schema",
+        "type": "object",
+        "description": "Animal details",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "decription": { "type": "string" }
+        }
+      }
+      
+  - animals_nearby: |
+      {
+        "$schema": "http://json-schema.org/schema",
+        "type": "object",
+        "description": "Animal details",
+        "properties": {
+          "animals":{
+            "type" : "array",
+            "items" : {
+              "type" :"object",
+              "properties": {
+            		"id": { "type": "integer" },
+         	  		"name": { "type": "string" },
+            		"distance": { "type": "number" }
+              }
+            }
+          }
+        }
+      }
+      
+  - animal_all: |
+      {
+        "$schema": "http://json-schema.org/schema",
+        "type": "object",
+        "description": "Animal details",
+        "properties": {
+          "animals":{
+            "type" : "array",
+            "items" : {
+              "type" :"object",
+              "properties": {
+            		"id": { "type": "integer" },
+         	  		"name": { "type": "string" },
+            		"description": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+      
+/animals:
+  displayName: Animals
+  get:
+    protocols: [HTTPS]
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "animals":[{
+                  "id":1,
+                  "name":"Kangaroo",
+                  "description":"Is a marsupial"
+                }]
+              }
+              
+  /{id}:
+    uriParameters:
+      id:
+        displayName: id
+        description: |
+          The ID of the ausemon you wish to view
+          
+        type: integer
+        example: |
+          1
+          
+        required: true
+    get:
+      displayName: Get Animal
+      description: |
+        Retrieve details of an animal/ausemon
+        
+      responses:
+        200:
+          body:
+            application/json:
+              schema: animal
+              example: |
+                {
+                  "id":1,
+                  "name":"Kangaroo",
+                  "description": "A marsupial"
+                }
+                
+  /nearby:
+    get:
+      queryParameters:
+        lat:
+          displayName: Latitude
+          type: string
+          required: true
+        lon:
+          displayName: Longitude
+          type: string
+          required: true
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "animals":[{
+                    "id":1,
+                    "name":"Kangaroo",
+                    "distance": 2.3
+                  }]
+                }

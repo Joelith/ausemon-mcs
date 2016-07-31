@@ -1,0 +1,1 @@
+{"policies":[{"name":"*.Animals(1.0).Routing_BindApiToImpl","value":"animals(1.0.0)"},{"name":"*.AnimalsACCS(1.0).Connector_Endpoint","value":"https://ausemon-gse00000535.apaas.em2.oraclecloud.com/animals"},{"name":"*.AnimalsACCS(1.0).Routing_BindApiToImpl","value":"AnimalsACCS(1.0)"},{"name":"*.Trails(1.0).Routing_BindApiToImpl","value":"MockService(1.0)"}]}
